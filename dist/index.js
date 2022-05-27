@@ -5872,7 +5872,7 @@ class Actions {
         }
         catch (err) {
             if (err.message.startsWith('No open PRs for')) {
-                console.log("error + no open PRs for. " + actionConf)
+                console.log("error + no open PRs for. " + JSON.stringify(actionConf))
                 return;
             }
             console.log("generic error " + err)
