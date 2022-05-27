@@ -14,6 +14,7 @@ export class Actions {
   constructor(private ctx: Context, private client: ReturnType<typeof getOctokit>, private actionConf: ActionConfig) {}
 
   public async mergeInTargetBranch() {
+    console.log('Entered into mergeInTargetBranch...')
     const { commits } = this.ctx.payload
     if (commits === null || commits.length === 0) {
       console.log('No commits found. Aborting...')
@@ -48,6 +49,7 @@ export class Actions {
   }
 
   public async pushOnNonTargetBranch() {
+    console.log("Entered into pushOnNonTargetBranch...")
     const branch = (this.ctx.payload.ref as string).replace('refs/head/', '')
     try {
       const prHelper = await PRHelper.createInstanceGivenBranch(this.ctx.repo, branch, this.client)
@@ -63,8 +65,10 @@ export class Actions {
       }
     } catch (err) {
       if ((err.message as string).startsWith('No open PRs for')) {
+        console.log("error + no open PRs for")
         return
       }
+      console.log("Generic error: " + err)
 
       throw err
     }

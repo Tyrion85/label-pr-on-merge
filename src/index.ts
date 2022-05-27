@@ -14,6 +14,7 @@ async function run(ctx: Context, token: string, actionConf: ActionConfig) {
       await actions.pushOnNonTargetBranch()
     }
   } catch (err) {
+    console.log("Failed in main")
     core.setFailed(err.message)
   }
 }
