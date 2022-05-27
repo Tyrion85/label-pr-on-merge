@@ -5829,8 +5829,8 @@ class Actions {
         this.client = client;
         this.actionConf = actionConf;
     }
-    async mergeInTargetBranch() {
-        console.log("entered mergeInTargetBranch")
+    async mergeInTargetBranch(actionConf) {
+        console.log("entered mergeInTargetBranch" + JSON.stringify(actionConf))
         const { commits } = this.ctx.payload;
         if (commits === null || commits.length === 0) {
             console.log('No commits found. Aborting...');
@@ -5971,7 +5971,7 @@ async function run(ctx, token, actionConf) {
     const actions = new Actions_1.Actions(ctx, client, actionConf);
     try {
         if (ctx.payload.ref === `refs/heads/${actionConf.targetBranch}`) {
-            await actions.mergeInTargetBranch();
+            await actions.mergeInTargetBranch(actionConf);
         }
         else {
             await actions.pushOnNonTargetBranch(actionConf);
