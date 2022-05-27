@@ -5830,6 +5830,7 @@ class Actions {
         this.actionConf = actionConf;
     }
     async mergeInTargetBranch() {
+        console.log("entered mergeInTargetBranch")
         const { commits } = this.ctx.payload;
         if (commits === null || commits.length === 0) {
             console.log('No commits found. Aborting...');
@@ -5857,6 +5858,7 @@ class Actions {
         }
     }
     async pushOnNonTargetBranch() {
+        console.log("entered pushOnNonTargetBranch")
         const branch = this.ctx.payload.ref.replace('refs/head/', '');
         try {
             const prHelper = await PRHelper_1.PRHelper.createInstanceGivenBranch(this.ctx.repo, branch, this.client);
@@ -5870,8 +5872,10 @@ class Actions {
         }
         catch (err) {
             if (err.message.startsWith('No open PRs for')) {
+                console.log("error + no open PRs for")
                 return;
             }
+            console.log("generic error " + err)
             throw err;
         }
     }
