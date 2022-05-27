@@ -5857,7 +5857,7 @@ class Actions {
             await prHelper.addLabelToPR(this.actionConf.mergedLabelName);
         }
     }
-    async pushOnNonTargetBranch() {
+    async pushOnNonTargetBranch(actionConf) {
         console.log("entered pushOnNonTargetBranch")
         const branch = this.ctx.payload.ref.replace('refs/head/', '');
         try {
@@ -5872,7 +5872,7 @@ class Actions {
         }
         catch (err) {
             if (err.message.startsWith('No open PRs for')) {
-                console.log("error + no open PRs for")
+                console.log("error + no open PRs for. " + actionConf)
                 return;
             }
             console.log("generic error " + err)
@@ -5974,7 +5974,7 @@ async function run(ctx, token, actionConf) {
             await actions.mergeInTargetBranch();
         }
         else {
-            await actions.pushOnNonTargetBranch();
+            await actions.pushOnNonTargetBranch(actionConf);
         }
     }
     catch (err) {
