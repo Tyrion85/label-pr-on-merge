@@ -5,6 +5,7 @@ import { Context } from '@actions/github/lib/context'
 import { ActionConfig, Actions } from './Actions'
 
 async function run(ctx: Context, token: string, actionConf: ActionConfig) {
+  conole.log("run called!")
   const client = github.getOctokit(token)
   const actions = new Actions(ctx, client, actionConf)
   try {
